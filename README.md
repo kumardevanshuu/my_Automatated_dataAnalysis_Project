@@ -1,5 +1,7 @@
 Automated Data Analysis using LangChain
-This project lets users analyze CSV or Excel data by asking questions in plain English. It uses LangChain, LLMs, and Python to convert natural language queries into data insights without any coding.
+
+This project lets users analyze CSV or Excel data by asking questions in plain English. 
+It uses LangChain, LLMs, and Python to convert natural language queries into data insights without any coding.
 
  Features:
 Upload CSV/Excel files
