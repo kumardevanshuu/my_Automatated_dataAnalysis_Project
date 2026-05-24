@@ -3,8 +3,8 @@ import re
 import pandas as pd
 from typing import Tuple, Any
 from langchain_core.prompts import PromptTemplate
-from langchain.chains.llm import LLMChain
 from langchain_groq import ChatGroq
+
 
 def analyze_dataframe(df: pd.DataFrame, question: str) -> Tuple[str, Any]:
     llm = ChatGroq(
@@ -24,13 +24,15 @@ def analyze_dataframe(df: pd.DataFrame, question: str) -> Tuple[str, Any]:
         )
     )
 
-    chain = LLMChain(llm=llm, prompt=prompt)
+    # Modern LCEL syntax — replaces deprecated LLMChain
+    chain = prompt | llm
     response = chain.invoke({
         "columns": ", ".join(df.columns),
         "question": question
     })
 
-    raw = response.get("text", "")
+    raw = response.content  # AIMessage.content instead of dict["text"]
+
     code_lines = []
     for line in raw.splitlines():
         if re.match(r"\s*(result|df|import|from)\b", line):
